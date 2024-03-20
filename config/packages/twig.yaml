@@ -1,5 +1,8 @@
 twig:
+    debug: true
     default_path: '%kernel.project_dir%/templates'
+    # globals:
+    #    payList: 'App.service.PaysService'
 
 when@test:
     twig:

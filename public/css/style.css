@@ -1,0 +1,34 @@
+body {
+    background-image: linear-gradient(to bottom, aqua, white);
+    background-attachment: fixed;
+}
+
+.stylish-card {
+    /* Ajoutez des styles pour correspondre au design de la carte */
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .stylish-card .card-img-top {
+    /* Style pour l'image en haut de la carte */
+  }
+  
+  .stylish-card .card-title {
+    /* Style pour le titre de la carte */
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .stylish-card .card-text {
+    /* Style pour le texte de la carte */
+  }
+  
+  .stylish-button {
+    /* Style pour le bouton */
+    background-color: #007bff; /* Exemple de couleur */
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+  }
+  
+
