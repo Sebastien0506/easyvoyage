@@ -173,5 +173,19 @@ class PaysController extends AbstractController
         
     ]);
    }
+
+   #[Route('info_pays/{id}', name:'view_pays', methods: ['GET'])]
+   public function infoPays($id, PaysRepository $paysRepository)
+   {
+          $pay = $paysRepository->find($id);
+        //   dd($pay);
+        if(!$pay) {
+            throw $this->createNotFoundException("Le pays demandé n'existe pas");
+        }
+
+          return $this->render('pays/info_pays.html.twig', [
+            "pay" => $pay,
+          ]);
+   }
    
 }

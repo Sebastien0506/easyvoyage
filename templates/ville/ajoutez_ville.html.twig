@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block h1 %}Ajoutez une ville{% endblock %}
+
+{% block body %}
+     
+    {{ form_start(ville)}}
+            {{form_row(ville.name)}}
+            {{form_row(ville.description)}}
+            {{form_row(ville.imageVille)}}
+            <button type="submit">Enregistrez</button>
+    {{ form_end(ville)}}
+
+
+{% endblock %}

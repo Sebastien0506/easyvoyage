@@ -24,9 +24,13 @@ class Pays
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[ORM\OneToMany(mappedBy: 'pays', targetEntity: Ville::class)]
+    private Collection $villes;
+
     public function __construct()
     {
         $this->paysImages = new ArrayCollection();
+        $this->villes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,6 +88,36 @@ class Pays
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ville>
+     */
+    public function getVilles(): Collection
+    {
+        return $this->villes;
+    }
+
+    public function addVille(Ville $ville): static
+    {
+        if (!$this->villes->contains($ville)) {
+            $this->villes->add($ville);
+            $ville->setPays($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVille(Ville $ville): static
+    {
+        if ($this->villes->removeElement($ville)) {
+            // set the owning side to null (unless already changed)
+            if ($ville->getPays() === $this) {
+                $ville->setPays(null);
+            }
+        }
 
         return $this;
     }

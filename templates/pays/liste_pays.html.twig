@@ -22,7 +22,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ pays.nom }}</h5>
           <p class="card-text">{{ pays.description }}</p>
-          <a href="#" class="btn stylish-button">En savoir plus</a>
+          <a href="{{ path('view_pays', {'id': pays.id})}}" class="btn stylish-button">En savoir plus</a>
         </div>
       </div>
     </div>
