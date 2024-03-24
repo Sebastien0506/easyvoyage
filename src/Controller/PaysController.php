@@ -188,12 +188,15 @@ class PaysController extends AbstractController
             // dd($villes);
             $villesData = [];
             foreach($ville as $villes){
-                $villesName = $villes->getName();
+                $villesName = $villes->getName();//On récupère le nom de la ville
                 // dd($villeName);
-                $villesImages = $villes->getImageVille();
-                $villesDescription = $villes->getDescription();
+                $villesImages = $villes->getImageVille();//On récupère l'image de la ville
+                $villesDescription = $villes->getDescription();//On récupère la description de la ville
                 // dd($villesDescription);
+                $villeId = $villes->getId();//On reécupère l'id de la ville
+                // dd($villeId);
                 $villesData[] = [
+                     'id' => $villeId,
                      'name' => $villesName,
                      'image' => $villesImages,
                      'description' => $villesDescription,

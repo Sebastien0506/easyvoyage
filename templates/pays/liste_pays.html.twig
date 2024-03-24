@@ -3,31 +3,24 @@
 {% block h1 %}Pays{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for pays in pays %}
-    <div class="col">
-      <div class="card stylish-card h-100">
 
-        
-            
-                    
-                    <img src="{{ asset('/uploads/' ~ pays.paysImages|first.name)}}" alt="Image de {{ pays.nom }}" class="d-block w-100 card-img-top"> 
-                   
-                
-            
-            <!-- Carousel Controls Here -->
-       
-
-        <div class="card-body">
-          <h5 class="card-title">{{ pays.nom }}</h5>
-          <p class="card-text">{{ pays.description }}</p>
-          <a href="{{ path('view_pays', {'id': pays.id})}}" class="btn stylish-button">En savoir plus</a>
+<div class="container">
+    <div class="row">
+      {% for pays in pays %}
+     
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ asset('/uploads/' ~ pays.paysImages|first.name)}}" class="card-img-top" alt="..." style="height: 200px; width: 100%; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pays.nom }}</h5>
+                    <p class="card-text">{{ pays.description}}</p>
+                    <a href="{{ path('view_pays', {'id': pays.id})}}" class="btn btn-primary">Voir plus</a>
+                </div>
+            </div>
         </div>
-      </div>
+      {% endfor %}
+      
     </div>
-    {% endfor %}
-  </div>
 </div>
 {% endblock %}
 

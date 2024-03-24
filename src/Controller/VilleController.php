@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ville;
 use App\Form\VilleType;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,6 +69,17 @@ class VilleController extends AbstractController
             'ville' => $form->createView(),
             
            ]);
+    }
 
+    #[Route('info_city/{id}', name:'info_ville', methods:['GET'])]
+    public function infoVille(int $id, VilleRepository $villeRepository)
+    {
+        // $ville = $villeRepository->find($id);
+        // // dd($ville);
+        // if($ville){
+
+        // }
+
+        return $this->render('ville/info_ville.html.twig',[]);
     }
 }
