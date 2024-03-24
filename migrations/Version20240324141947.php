@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231110133616 extends AbstractMigration
+final class Version20240324141947 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,16 @@ final class Version20231110133616 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD is_verified TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE hotel ADD ville_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE hotel ADD CONSTRAINT FK_3535ED9A73F0036 FOREIGN KEY (ville_id) REFERENCES ville (id)');
+        $this->addSql('CREATE INDEX IDX_3535ED9A73F0036 ON hotel (ville_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user DROP is_verified');
+        $this->addSql('ALTER TABLE hotel DROP FOREIGN KEY FK_3535ED9A73F0036');
+        $this->addSql('DROP INDEX IDX_3535ED9A73F0036 ON hotel');
+        $this->addSql('ALTER TABLE hotel DROP ville_id');
     }
 }

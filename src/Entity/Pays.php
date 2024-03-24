@@ -27,10 +27,13 @@ class Pays
     #[ORM\OneToMany(mappedBy: 'pays', targetEntity: Ville::class)]
     private Collection $villes;
 
+    
+
     public function __construct()
     {
         $this->paysImages = new ArrayCollection();
         $this->villes = new ArrayCollection();
+        $this->hotels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,4 +124,7 @@ class Pays
 
         return $this;
     }
+
+    
+
 }

@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block h1 %}Ajoutez l'hotel{% endblock %}
+
+{% block body %}
+     {{form_start(hotel)}}
+         {{form_row(hotel.nom)}}
+         {{form_row(hotel.adresse)}}
+         {{form_row(hotel.description)}}
+         {{form_row(hotel.ville)}}
+         {{form_row(hotel.imageHotel)}}
+         <button type="submit">Enregistrez</button>
+     {{form_end(hotel)}}
+
+
+{% endblock %}

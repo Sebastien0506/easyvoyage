@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VilleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VilleRepository::class)]
@@ -24,6 +26,14 @@ class Ville
 
     #[ORM\Column(length: 255)]
     private ?string $imageVille = null;
+
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Hotel::class)]
+    private Collection $hotels;
+
+    public function __construct()
+    {
+        $this->hotels = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +84,36 @@ class Ville
     public function setImageVille(string $imageVille): static
     {
         $this->imageVille = $imageVille;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hotel>
+     */
+    public function getHotels(): Collection
+    {
+        return $this->hotels;
+    }
+
+    public function addHotel(Hotel $hotel): static
+    {
+        if (!$this->hotels->contains($hotel)) {
+            $this->hotels->add($hotel);
+            $hotel->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHotel(Hotel $hotel): static
+    {
+        if ($this->hotels->removeElement($hotel)) {
+            // set the owning side to null (unless already changed)
+            if ($hotel->getVille() === $this) {
+                $hotel->setVille(null);
+            }
+        }
 
         return $this;
     }
