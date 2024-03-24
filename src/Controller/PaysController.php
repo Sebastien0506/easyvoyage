@@ -177,14 +177,39 @@ class PaysController extends AbstractController
    #[Route('info_pays/{id}', name:'view_pays', methods: ['GET'])]
    public function infoPays($id, PaysRepository $paysRepository)
    {
-          $pay = $paysRepository->find($id);
-        //   dd($pay);
-        if(!$pay) {
+          $paysInfo = $paysRepository->find($id);
+         
+        if(!$paysInfo) {
             throw $this->createNotFoundException("Le pays demandé n'existe pas");
         }
+        
+        if($paysInfo){
+            $ville = $paysInfo->getVilles();
+            // dd($villes);
+            $villesData = [];
+            foreach($ville as $villes){
+                $villesName = $villes->getName();
+                // dd($villeName);
+                $villesImages = $villes->getImageVille();
+                $villesDescription = $villes->getDescription();
+                // dd($villesDescription);
+                $villesData[] = [
+                     'name' => $villesName,
+                     'image' => $villesImages,
+                     'description' => $villesDescription,
+                ];
+            }
+            // dd($villesData);
+
+            
+        }
+        // dd($villes);
+
+        
 
           return $this->render('pays/info_pays.html.twig', [
-            "pay" => $pay,
+            "paysInfo" => $paysInfo,
+            "villesData" => $villesData,
           ]);
    }
    

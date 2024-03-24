@@ -1,13 +1,23 @@
 {% extends "base.html.twig" %}
 
-{% block h1 %}{{pay.nom}}{% endblock %}
+{% block h1 %}{{paysInfo.nom}}{% endblock %}
 
 {% block body %}
-
-<p></p>
-
-
-
-
+<div class="container">
+    <div class="row">
+    {% for ville in villesData %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ asset('/uploads/' ~ ville.image)}}" class="card-img-top" alt="..." style="height: 200px; width: 100%; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ville.name }}</h5>
+                    <p class="card-text">{{ ville.description}}</p>
+                    <a href="#" class="btn btn-primary">Voir plus</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

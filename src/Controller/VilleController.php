@@ -38,34 +38,30 @@ class VilleController extends AbstractController
 
             $imageVilleFile = $form->get('imageVille')->getData();
 
-            if($imageVilleFile){
-                 $orignalFilename = pathinfo($imageVilleFile->getClientOriginalName(), PATHINFO_FILENAME);
+            if($imageVilleFile){//Si imageVilleFile existe
+                try{//On créer un nouveau fichier
+                    $fichier = md5(uniqid()) . '.' . $imageVilleFile->guessExtension();
 
-                 $safeFilename = $slugger->slug($orignalFilename);
-
-                 $newFilename = $safeFilename. '-' . uniqid() . '.' .$imageVilleFile->guessExtension();
-
-                 try{
-                     $imageVilleFile->move(
-                        $this->getParameter('imageVille_directory'),
-                        $newFilename
-                     );
-                 }catch(FileException $e){
-                        $this->addFlash('error', "Impossible d'enregistrez l'image.");
-
-                        return $this->redirectToroute('ajoutez_ville');
-                 }
+                    $imageVilleFile->move(//On déplace le fichier dans le repertoire
+                        $this->getParameter('image_directory'),
+                        $fichier
+                    );
+// dd($imageVilleFile, $fichier);
+                } catch(Exception $e){//On gère les éventuelles problème
+                    $this->addFlash('error', "Impossible d'enregistrer l'image");
+                }
+                
             }
-
+            //On donne les informations a la variable $ville
             $ville->setName($nom);
             $ville->setDescription($description);
             $ville->setPays($pay);
-            $ville->setImageVille($imageVilleFile);
+            $ville->setImageVille($fichier);
 // dd($ville);
-            $em->persist($ville);
-            $em->flush();
+            $em->persist($ville); //On persist
+            $em->flush();//On flush
             // dd($pay);
-            return $this->redirectToRoute('ajoutez_ville', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('ajoutez_ville', [], Response::HTTP_SEE_OTHER);//On gère la redirection une fois que l'enregistrement c'est effectuer
            }
 
            return $this->render('ville/ajoutez_ville.html.twig', [
