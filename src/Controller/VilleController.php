@@ -74,12 +74,36 @@ class VilleController extends AbstractController
     #[Route('info_city/{id}', name:'info_ville', methods:['GET'])]
     public function infoVille(int $id, VilleRepository $villeRepository)
     {
-        // $ville = $villeRepository->find($id);
-        // // dd($ville);
-        // if($ville){
+        $ville = $villeRepository->find($id);//On récupère la ville par sont id 
+        // dd($ville);
+        $hotelData = []; //On initialise la variable $hotelData a un tableau vide 
 
-        // }
-
-        return $this->render('ville/info_ville.html.twig',[]);
+        if($ville){//Si il y'a une ville 
+            $nomVille = $ville->getName();//On récupère sont nom
+            // dd($nomVille);
+            $hotel = $ville->getHotels();//On récupère les hotels associer à la ville
+            // dd($hotel);
+            foreach($hotel as $ville){//On boucle sur chaque hotel
+               $hotelName = $ville->getNom();//On récupère leurs nom
+               $hotelAdresse = $ville->getAdresse();//On récupère leurs adresse
+               $hotelDescription = $ville->getDescription();//On récupère leurs description
+               $hotelImage = $ville->getImageHotel();//On récupère leurs image
+            //    dd($hotelAdresse);
+            //    dd($hotelName);
+            // dd($hotelAdresse, $hotelDescription, $hotelImage, $hotelName);
+            $hotelData[] = [//On stock tous la variable $hotelData
+                'hotelName' => $hotelName,
+                'hotelAdresse' => $hotelAdresse,
+                'hotelDescription' => $hotelDescription,
+                'hotelImage' => $hotelImage,
+            ];
+            // dd($hotelData);
+            }
+        }
+        //On affiche la vue 
+        return $this->render('ville/info_ville.html.twig',[
+            'hotelData' => $hotelData,
+            'nomVille' => $nomVille,
+        ]);
     }
 }

@@ -1,10 +1,25 @@
 {% extends "base.html.twig" %}
 
-{% block h1 %}Ici il y aura le nom de la ville{% endblock %}
+{% block h1 %}{{nomVille}}{% endblock %}
 
 {% block body %}
 
 
-
-
+<div class="container">
+    <div class="row">
+    {% for hotel in hotelData %}
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ asset('/uploads/' ~ hotel.hotelImage)}}" class="card-img-top" alt="..." style="height: 200px; width: 100%; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ hotel.hotelName }}</h5>
+                    <h5 class="card-title">{{ hotel.hotelAdresse }}</h5>
+                    <p class="card-text">{{ hotel.hotelDescription}}</p>
+                    <a href="#" class="btn btn-primary">Voir plus</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
 {% endblock %}
