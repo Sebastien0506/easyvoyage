@@ -3,7 +3,10 @@
 {% block h1 %}{{nomVille}}{% endblock %}
 
 {% block body %}
-
+<div class="card" style= "width: 5rem; background-color: rgba(255, 255, 255, 0.5);">
+    <h4>{{ temperature }} °C</h4>
+    <h4>{{ temps }}</h4>
+</div>
 
 <div class="container">
     <div class="row">
@@ -15,6 +18,8 @@
                     <h5 class="card-title">{{ hotel.hotelName }}</h5>
                     <h5 class="card-title">{{ hotel.hotelAdresse }}</h5>
                     <p class="card-text">{{ hotel.hotelDescription}}</p>
+                    {# <p class="card-text">{{ temperature }} °C</p>
+                    <p class="card-text">{{ temps }}</p> #}
                     <a href="#" class="btn btn-primary">Voir plus</a>
                 </div>
             </div>

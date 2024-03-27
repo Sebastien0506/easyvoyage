@@ -34,5 +34,9 @@ body {
   .image-ville {
      height: 50%;
   }
+
+  .meteo {
+    opacity: 0.33;
+  }
   
 

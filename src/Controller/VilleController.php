@@ -7,6 +7,7 @@ use App\Form\VilleType;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -72,17 +73,46 @@ class VilleController extends AbstractController
     }
 
     #[Route('info_city/{id}', name:'info_ville', methods:['GET'])]
-    public function infoVille(int $id, VilleRepository $villeRepository)
+    public function infoVille(int $id, VilleRepository $villeRepository, Security $security)
     {
         $ville = $villeRepository->find($id);//On récupère la ville par sont id 
         // dd($ville);
         $hotelData = []; //On initialise la variable $hotelData a un tableau vide 
 
+        
         if($ville){//Si il y'a une ville 
-            $nomVille = $ville->getName();//On récupère sont nom
+            $nomVille = urlencode($ville->getName());//On récupère sont nom
             // dd($nomVille);
+            
             $hotel = $ville->getHotels();//On récupère les hotels associer à la ville
-            // dd($hotel);
+            
+            
+
+            $url = 'http://localhost:8001/api/meteo?ville=' . $nomVille;//On créer une url
+            $ch = curl_init($url);//On initialise une requête curl avec l'url
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/ld+json']);
+
+            //On exécute la requête
+            $response = curl_exec($ch);
+            if(curl_error($ch)){//Si il y a des erreurs
+                throw new Exception(curl_error($ch));
+            }
+            curl_close($ch);//On ferme la requête
+
+            $data = json_decode($response, true);//On décode la reponse envoyer par l'api
+            // dd($data);
+            // $meteoVille = [];
+            
+            //On récupère les données
+            $temperature = $data['temperature'];
+            $temps = $data['temps'];
+
+            // $meteoVille = [//On stock les données dans un tableau
+            //     'temperature' => $temperature,
+            //     'temps' => $temps,
+            // ];
+            // dd($meteoVille);
             foreach($hotel as $ville){//On boucle sur chaque hotel
                $hotelName = $ville->getNom();//On récupère leurs nom
                $hotelAdresse = $ville->getAdresse();//On récupère leurs adresse
@@ -104,6 +134,8 @@ class VilleController extends AbstractController
         return $this->render('ville/info_ville.html.twig',[
             'hotelData' => $hotelData,
             'nomVille' => $nomVille,
+            'temperature' => $temperature,
+            'temps' => $temps,
         ]);
     }
 }
