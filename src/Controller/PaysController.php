@@ -155,7 +155,7 @@ class PaysController extends AbstractController
    #[Route('liste-pays', name:'liste_pays')]
    public function listePays(PaysRepository $paysRepository, EntityManagerInterface $entityManager): Response
    {
-    // $pays = $paysRepository->findAll();
+    
 
     $queryBuilder = $entityManager->createQueryBuilder();
 
@@ -167,7 +167,6 @@ class PaysController extends AbstractController
         ->getQuery()
         ->getResult();
    
-// dd($pays);
     return $this->render('pays/liste_pays.html.twig', [
         'pays' => $pays,
         
@@ -185,16 +184,16 @@ class PaysController extends AbstractController
         
         if($paysInfo){
             $ville = $paysInfo->getVilles();
-            // dd($villes);
+            
             $villesData = [];
             foreach($ville as $villes){
                 $villesName = $villes->getName();//On récupère le nom de la ville
-                // dd($villeName);
+                
                 $villesImages = $villes->getImageVille();//On récupère l'image de la ville
                 $villesDescription = $villes->getDescription();//On récupère la description de la ville
-                // dd($villesDescription);
+                
                 $villeId = $villes->getId();//On reécupère l'id de la ville
-                // dd($villeId);
+               
                 $villesData[] = [
                      'id' => $villeId,
                      'name' => $villesName,
@@ -202,15 +201,8 @@ class PaysController extends AbstractController
                      'description' => $villesDescription,
                 ];
             }
-            // dd($villesData);
-
-            
         }
-        // dd($villes);
-
-        
-
-          return $this->render('pays/info_pays.html.twig', [
+        return $this->render('pays/info_pays.html.twig', [
             "paysInfo" => $paysInfo,
             "villesData" => $villesData,
           ]);

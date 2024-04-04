@@ -13,13 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HotelController extends AbstractController
 {
-    // #[Route('/hotel', name: 'app_hotel')]
-    // public function index(): Response
-    // {
-    //     return $this->render('hotel/index.html.twig', [
-    //         'controller_name' => 'HotelController',
-    //     ]);
-    // }
+   
 
     #[Route('/add_hotel', name:'ajouter_hotel')]
     public function addHotel(Request $request, EntityManagerInterface $em): Response
@@ -46,7 +40,7 @@ class HotelController extends AbstractController
                         $this->getParameter('image_directory'),
                         $fichier
                     );
-// dd($imageVilleFile, $fichier);
+
                 } catch(Exception $e){//On gère les éventuelles problème
                     $this->addFlash('error', "Impossible d'enregistrer l'image");
                 }
