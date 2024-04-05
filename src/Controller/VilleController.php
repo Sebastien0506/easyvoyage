@@ -97,13 +97,12 @@ class VilleController extends AbstractController
             $data = json_decode($response, true);//On décode la reponse envoyer par l'api
             // dd($data);
 
-            if(array_key_exists("error", $data)){
-                // echo "Erreur: " . $data["error"];
-                // // dd($data);
+            if(array_key_exists("error", $data)){//On vérifie la réponse de l'api 
+                // Si la réponse est une "error" on définit les variable $temperature et $temps sur "Non Disponible"
                 $temperature = "Non Disponible";
                 $temps = "Non Disponible";
-            } else {
-                 // var_dump("coucou");
+            } else { //Si l'api ne renvoi pas d'erreur on met à jour les variables avec les données reçu 
+                 
                  //On récupère les données
                 $temperature = $data['temperature'];
                 $temps = $data['temps'];
