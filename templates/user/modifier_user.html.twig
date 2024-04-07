@@ -3,6 +3,13 @@
 {% block h1 %}Modifier mes informations{% endblock %}
 
 {% block body %}
+{% for label, messages in app.flashes %}
+     {% for message in messages %}
+          <div class="flash-{{ label }}">
+               {{ message }}
+          </div>
+     {% endfor %}
+{% endfor %}
 
 <div class="container mt-5 d-flex justify-content-center align-items-center">
 

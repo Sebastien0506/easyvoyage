@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
+use App\Service\EncryptionService;
 use Symfony\Component\Mime\Address;
 use App\Security\EmailAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,7 +30,7 @@ class RegistrationController extends AbstractController
 
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager,
-    UserAuthenticatorInterface $userAuthenticator, EmailAuthenticator $authenticator): Response
+    UserAuthenticatorInterface $userAuthenticator, EmailAuthenticator $authenticator, EncryptionService $encryptionService): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -45,9 +46,11 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setNom($nom);
-            $user->setPrenom($prenom);
-
+            $nomCrypter = $encryptionService->EncryptionNom($nom);
+            $prenomCrypter = $encryptionService->EncryptionPrenom($prenom);
+            $user->setNom($nomCrypter);
+            $user->setPrenom($prenomCrypter);
+// dd($user);
             // dd($user);
             $entityManager->persist($user);
             $entityManager->flush();
