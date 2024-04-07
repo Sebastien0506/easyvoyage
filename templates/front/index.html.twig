@@ -5,6 +5,7 @@
 {% block h1 %}Page d'accueil {% endblock %}
 
 {% block body %}
+
 {% for label, messages in app.flashes %}
      {% for message in messages %}
           <div class="flash-{{ label }}">
@@ -12,5 +13,9 @@
           </div>
      {% endfor %}
 {% endfor %}
+<h4>Bienvenue sur la page d'acceuil du site easyVoyage</h4>
 
+<script>
+   $('h4').css('background-color', 'yellow');
+</script>
 {% endblock %}
