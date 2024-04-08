@@ -88,6 +88,9 @@ class PaysController extends AbstractController
             $images = $form->get('images')->getData();
 
             $description = $form->get('description')->getData();
+
+            $favoris = $form->get('favoris')->getData();
+            // dd($favoris);
             //On boucle sur les images
             foreach($images as $image){
                 // On génère un nouveau nom de fichier 
@@ -104,8 +107,10 @@ class PaysController extends AbstractController
                 $img->setName($fichier);
                 $pay->addPaysImage($img);
             }
-
+            $pay->setFavoris($favoris);
             $pay->setDescription($description);
+// dd($pay);
+            $entityManager->persist($pay);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_pays_index', [], Response::HTTP_SEE_OTHER);

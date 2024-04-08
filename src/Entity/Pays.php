@@ -27,6 +27,11 @@ class Pays
     #[ORM\OneToMany(mappedBy: 'pays', targetEntity: Ville::class)]
     private Collection $villes;
 
+    #[ORM\Column]
+    private ?bool $favoris = null;
+
+   
+
     
 
     public function __construct()
@@ -124,6 +129,20 @@ class Pays
 
         return $this;
     }
+
+    public function isFavoris(): ?bool
+    {
+        return $this->favoris;
+    }
+
+    public function setFavoris(bool $favoris): static
+    {
+        $this->favoris = $favoris;
+
+        return $this;
+    }
+
+    
 
     
 

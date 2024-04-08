@@ -21,6 +21,17 @@ class PaysRepository extends ServiceEntityRepository
         parent::__construct($registry, Pays::class);
     }
 
+    public function findFavoris()
+    {
+        return $this->createQueryBuilder('p')
+        ->andWhere('p.favoris = :val')
+        ->setParameter('val', true)
+        ->getQuery()
+        ->getResult()
+    ;
+
+    }
+
 //    /**
 //     * @return Pays[] Returns an array of Pays objects
 //     */
