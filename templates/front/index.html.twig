@@ -5,7 +5,7 @@
 {% block h1 %}Page d'accueil {% endblock %}
 
 {% block body %}
-
+<div class="flash-alert">
 {% for label, messages in app.flashes %}
      {% for message in messages %}
           <div class="flash-{{ label }}">
@@ -13,9 +13,31 @@
           </div>
      {% endfor %}
 {% endfor %}
+</div>
 <h4>Bienvenue sur la page d'acceuil du site easyVoyage</h4>
 
 <script>
-   $('h4').css('background-color', 'yellow');
+$(document).ready(function() {
+    //On itérer sur chaque élément qui a la classe 'flash-alert'
+    $(".flash-alert").each(function() {
+        //On vérifier si l'élément contient du texte
+        if ($(this).text().trim().length > 0) {
+            //On applique les style si l'élément contient du texte
+            $(this).css({
+                "background-color": "green",
+                "color": "white",
+                "padding": "10px",
+                "border-radius": "5px",
+                "font-size": "20px",
+                "display": "inline-block",
+                "margin": "10px",
+            });
+            //On programmer la disparition de l'élément après 3 secondes
+            setTimeout(function() {
+               $(this).fadeOut("slow");
+            }.bind(this), 3000); //On utiliser '.bind(this)' pour conserver le contexte de 'this' dans la fonction de timeout
+        }
+    });
+});
 </script>
 {% endblock %}
