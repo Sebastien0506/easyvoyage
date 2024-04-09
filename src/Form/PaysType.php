@@ -21,7 +21,17 @@ class PaysType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+            ->add('nom', TextType::class, [
+                'label' => 'nom',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir le nom du pays',
+                    ]),
+                ],
+            ])
             // On ajoute le champs "imag" dans le formulaire 
             // Il n'est pas lié a la base de données (mapped à false)
             ->add('images', FileType::class, [
@@ -47,6 +57,10 @@ class PaysType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description du pays',
+                'attr' => [
+                    'class' => "form-control",
+                    
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir une description',

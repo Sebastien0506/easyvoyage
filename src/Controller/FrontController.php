@@ -14,7 +14,7 @@ class FrontController extends AbstractController
     public function index(PaysRepository $paysRepository): Response
     {   
        $paysFavoris = $paysRepository->findFavoris();
-       dd($paysFavoris);
+    //    dd($paysFavoris);
         return $this->render('front/index.html.twig', [
             
             

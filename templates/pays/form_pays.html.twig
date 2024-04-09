@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block h1 %}Modifiez le Pays{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="w-auto">
+        {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        <div class="pays-description">
+            {{ form_row(form.description) }}
+        </div>
+        {{ form_row(form.favoris) }}
+        {% for image in pay.paysImages %}
+            <img src="{{ asset('/uploads/' ~ image.name )}}" alt="image de Pays">
+            <button class="btn btn-warning"><a href="{{ path('pays_delete_images', {'id': image.id}) }}" 
+                 data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer l'image</a></button>
+        {% endfor %}
+        {{ form_row(form.images) }}
+        <button type="submit" class="btn btn-primary">Enregistrez</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+{% endblock %}

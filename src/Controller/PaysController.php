@@ -77,8 +77,12 @@ class PaysController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_pays_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Pays $pay, EntityManagerInterface $entityManager): Response
+    public function edit(int $id, Request $request, Pays $pay, EntityManagerInterface $entityManager, PaysRepository $paysRepository): Response
     {
+
+        $pay = $paysRepository->find($id);
+        // dd($pay);
+        
         $form = $this->createForm(PaysType::class, $pay);
         $form->handleRequest($request);
 
@@ -116,9 +120,9 @@ class PaysController extends AbstractController
             return $this->redirectToRoute('app_pays_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('pays/edit.html.twig', [
+        return $this->render('pays/form_pays.html.twig', [
+            'form' => $form->createView(),
             'pay' => $pay,
-            'form' => $form,
         ]);
     }
 
