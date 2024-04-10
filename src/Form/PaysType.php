@@ -43,7 +43,7 @@ class PaysType extends AbstractType
                     new All([
                         'constraints' => [
                             new File([
-                                'maxSize' => '30K',
+                                'maxSize' => '1024K',
                                 'mimeTypes' => [
                                     'image/jpeg',
                                     'image/jpg',

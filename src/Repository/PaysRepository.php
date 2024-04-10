@@ -26,11 +26,24 @@ class PaysRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
         ->andWhere('p.favoris = :val')
         ->setParameter('val', true)
+        ->select('p', 'pi')
+        ->leftJoin('p.paysImages', 'pi')
         ->getQuery()
         ->getResult()
     ;
 
     }
+
+    // public function findPaysImages()
+    // {
+    //     return $this->createQueryBuilder('p')
+    //     ->select('p', 'pi')
+    //     ->from(Pays::class, 'p')
+    //     ->leftJoin('p.paysImages', 'pi')
+
+    //     ->getQuery()
+    //     ->getResult();
+    // }
 
 //    /**
 //     * @return Pays[] Returns an array of Pays objects

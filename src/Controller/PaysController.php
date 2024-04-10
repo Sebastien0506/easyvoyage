@@ -137,9 +137,11 @@ class PaysController extends AbstractController
         return $this->redirectToRoute('app_pays_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/supprime/image/{id}', name:'pays_delete_images', methods: ['DELETE'])]
+    #[Route('/supprime_image/{id}', name:'pays_delete_images', methods: ['DELETE'])]
     public function deleteImage(PaysImage $paysImage, Request $request, EntityManagerInterface $em){
-        $data = json_decode($request->getContent(), true);
+        $content = $request->getContent();
+     var_dump($content);
+        $data = json_decode($content, true);
         // dd($data);
         //On verifie si le token est valide 
         if($this->isCsrfTokenValid('delete'.$paysImage->getId(), $data['_token'])){

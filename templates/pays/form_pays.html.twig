@@ -13,8 +13,8 @@
         {{ form_row(form.favoris) }}
         {% for image in pay.paysImages %}
             <img src="{{ asset('/uploads/' ~ image.name )}}" alt="image de Pays">
-            <button class="btn btn-warning"><a href="{{ path('pays_delete_images', {'id': image.id}) }}" 
-                 data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer l'image</a></button>
+            <a href="{{ path('pays_delete_images', {'id': image.id}) }}" data-id= image.id class="delete-image"
+                 data-delete data-token="{{ csrf_token('delete' ~ image.id )}}">Supprimer l'image</a>
         {% endfor %}
         {{ form_row(form.images) }}
         <button type="submit" class="btn btn-primary">Enregistrez</button>
@@ -22,4 +22,35 @@
     </div>
 </div>
 
+<script>
+document.querySelectorAll('.delete-image').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault(); // Empêcher le lien de suivre son URL
+
+        if (confirm('Êtes-vous sûr de vouloir supprimer cette image ?')) { // Demander confirmation
+            const url = this.getAttribute("href");
+            console.log(url);
+            const token = this.dataset.token; // Récupérer le token CSRF
+console.log(token);
+            xhr = new XMLHttpRequest();
+            xhr.open("DELETE", url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4){
+                    var respone = JSON.parse(xhr.responseText);
+                    if(xhr.status === 200 && response.success){
+                        console.log('Image supprimer avec succès');
+                    } else {
+                        console.error('Echec lors de la suppression'. response.error);
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({_token: token}));
+        }
+    });
+});
+
+
+</script>
 {% endblock %}

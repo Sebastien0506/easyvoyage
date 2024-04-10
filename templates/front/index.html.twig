@@ -14,6 +14,22 @@
      {% endfor %}
 {% endfor %}
 </div>
+<h2 class="text-center">Nos Pays Favoris</h2>
+<div class="d-flex justify-content-center">
+    {% for pays in favorisPays %}
+        <div class="card" style="width: 10rem;">
+            {% for imageURL in pays.images %}
+                <img src="{{ asset('/uploads/' ~ imageURL) }}" class="card-img-top" style="width: 100%" alt="">
+            {% endfor %}
+            <div class="card-body">
+              <h5 class="card-title">{{ pays.nom }}</h5>
+              <p class="card-text"> {{ pays.description }}</p>
+              <a href="#" class="btn btn-primary">Voir Plus</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
 <h4>Bienvenue sur la page d'acceuil du site easyVoyage</h4>
 
 <script>
