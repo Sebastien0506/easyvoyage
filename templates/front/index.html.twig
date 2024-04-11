@@ -17,9 +17,9 @@
 <h2 class="text-center">Nos Pays Favoris</h2>
 <div class="d-flex justify-content-center">
     {% for pays in favorisPays %}
-        <div class="card" style="width: 10rem;">
+        <div class="card" style="width: 18rem;">
             {% for imageURL in pays.images %}
-                <img src="{{ asset('/uploads/' ~ imageURL) }}" class="card-img-top" style="width: 100%" alt="">
+                <img src="{{ asset('/uploads/' ~ imageURL) }}" class="card-img-top" style="height: 200px; width: 100%; object-fit: cover;" alt="">
             {% endfor %}
             <div class="card-body">
               <h5 class="card-title">{{ pays.nom }}</h5>
